@@ -2,7 +2,7 @@
 //  StorageService.swift
 //  NewsApp
 //
-//  Created by Kate on 05.02.2023.
+//  Created by Andrey Timofeev on 05.02.2023.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ protocol StorageServiceProtocol {
 }
 
 struct StorageService: StorageServiceProtocol {
-    // MARK: Nested
+    // MARK: - Nested
 
     enum Keys: String {
         case news
@@ -29,8 +29,9 @@ struct StorageService: StorageServiceProtocol {
     }
 
     func loadData() -> [News] {
-        if let data = UserDefaults.standard.data(forKey: Keys.news.rawValue),
-           let news = try? JSONDecoder().decode([News].self, from: data) {
+        if
+            let data = UserDefaults.standard.data(forKey: Keys.news.rawValue),
+            let news = try? JSONDecoder().decode([News].self, from: data) {
             return news
         }
 

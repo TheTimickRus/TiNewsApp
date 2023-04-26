@@ -2,17 +2,17 @@
 //  MainViewModel.swift
 //  NewsApp
 //
-//  Created by Kate on 05.02.2023.
+//  Created by Andrey Timofeev on 05.02.2023.
 //
 
 import Foundation
 
 final class MainViewModel {
-    // MARK: Internal Props
+    // MARK: - Internal Props
 
     var isNewsFetched: (([News]) -> Void)?
 
-    // MARK: Private Props
+    // MARK: - Private Props
 
     private let router: MainRouter
     private let api: ApiServiceProtocol = ApiService.shared
@@ -77,7 +77,7 @@ extension MainViewModel {
                 DispatchQueue.main.async {
                     self.isNewsFetched?(self.news)
                 }
-            } catch(let error) {
+            } catch {
                 DispatchQueue.main.async {
                     self.router.showError(error)
                 }

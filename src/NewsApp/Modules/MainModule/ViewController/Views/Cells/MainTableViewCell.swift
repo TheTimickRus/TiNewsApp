@@ -2,13 +2,15 @@
 //  MainTableViewCell.swift
 //  NewsApp
 //
-//  Created by Kate on 04.02.2023.
+//  Created by Andrey Timofeev on 04.02.2023.
 //
 
+import Kingfisher
+import SwifterSwift
 import UIKit
 
 final class MainTableViewCell: UITableViewCell {
-    // MARK: Props
+    // MARK: - Props
 
     struct Props: Equatable {
         let imageUrl: String
@@ -24,7 +26,7 @@ final class MainTableViewCell: UITableViewCell {
 
     private lazy var mainView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .secondarySystemBackground
         view.clipsToBounds = true
         view.layer.cornerRadius = 20
 
@@ -34,6 +36,7 @@ final class MainTableViewCell: UITableViewCell {
 
     private lazy var articleImageView: UIImageView = {
         let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.cornerRadius = 20
         iv.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -72,6 +75,7 @@ final class MainTableViewCell: UITableViewCell {
         setupConstaints()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -82,7 +86,7 @@ extension MainTableViewCell {
         guard self.props != props else { return }
         self.props = props
 
-        articleImageView.loadImage(from: URL(string: props.imageUrl))
+        articleImageView.kf.setImage(with: URL(string: props.imageUrl), placeholder: Assets.Images.placegolder)
 
         titleLabel.text = props.title
 
@@ -113,7 +117,6 @@ private extension MainTableViewCell {
             mainView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
         ])
 
-
         articleImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             articleImageView.leftAnchor.constraint(equalTo: mainView.leftAnchor),
@@ -122,7 +125,6 @@ private extension MainTableViewCell {
             articleImageView.heightAnchor.constraint(equalToConstant: 225)
         ])
 
-
         labelsStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             labelsStackView.leftAnchor.constraint(equalTo: mainView.leftAnchor, constant: 12),
@@ -130,6 +132,5 @@ private extension MainTableViewCell {
             labelsStackView.topAnchor.constraint(equalTo: articleImageView.bottomAnchor, constant: 12),
             labelsStackView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -12)
         ])
-
     }
 }

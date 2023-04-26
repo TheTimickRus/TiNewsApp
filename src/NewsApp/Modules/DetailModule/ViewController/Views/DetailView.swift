@@ -2,13 +2,15 @@
 //  DetailView.swift
 //  NewsApp
 //
-//  Created by Kate on 05.02.2023.
+//  Created by Andrey Timofeev on 05.02.2023.
 //
 
+import Kingfisher
+import SwifterSwift
 import UIKit
 
 final class DetailView: UIView {
-    // MARK: Props
+    // MARK: - Props
 
     struct Props: Equatable {
         let news: News
@@ -67,6 +69,7 @@ final class DetailView: UIView {
         setupConstraints()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -77,7 +80,7 @@ extension DetailView {
         guard self.props != props else { return }
         self.props = props
 
-        articleImageView.loadImage(from: URL(string: props.news.imageUrl))
+        articleImageView.kf.setImage(with: URL(string: props.news.imageUrl), placeholder: Assets.Images.placegolder)
         titleLabel.text = props.news.title
         dateAndAutorLabel.text = "\(props.news.publishedAt), \(props.news.author)"
         descriptionLabel.text = props.news.description
@@ -86,7 +89,7 @@ extension DetailView {
 
 private extension DetailView {
     func configure() {
-        backgroundColor = .white
+        backgroundColor = .systemBackground
 
         addSubviews([
             articleImageView,
@@ -126,7 +129,7 @@ private extension DetailView {
 
             showNewsButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 12),
             showNewsButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12),
-            showNewsButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12),
+            showNewsButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12)
         ])
     }
 

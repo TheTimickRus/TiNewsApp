@@ -2,13 +2,13 @@
 //  MainViewController.swift
 //  NewsApp
 //
-//  Created by Kate on 04.02.2023.
+//  Created by Andrey Timofeev on 04.02.2023.
 //
 
 import UIKit
 
 final class MainViewController: UIViewController {
-    // MARK: Private Props
+    // MARK: - Private Props
 
     private let viewModel: MainViewModel
     private let mainView = MainView()
@@ -21,6 +21,7 @@ final class MainViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

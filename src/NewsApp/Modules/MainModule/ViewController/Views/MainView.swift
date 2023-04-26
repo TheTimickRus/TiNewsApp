@@ -2,13 +2,13 @@
 //  MainView.swift
 //  NewsApp
 //
-//  Created by Kate on 04.02.2023.
+//  Created by Andrey Timofeev on 04.02.2023.
 //
 
 import UIKit
 
 final class MainView: UIView {
-    // MARK: Props
+    // MARK: - Props
 
     struct MainViewProps: Equatable {
         let items: [News]
@@ -40,6 +40,7 @@ final class MainView: UIView {
         setupConstaints()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

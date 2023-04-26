@@ -2,19 +2,13 @@
 //  Pagination.swift
 //  NewsApp
 //
-//  Created by Kate on 04.02.2023.
+//  Created by Andrey Timofeev on 04.02.2023.
 //
 
-class Pagination {
+final class Pagination {
     var page: Int
     var itemsPerPage: Int
     var totalItems: Int
-
-    init(page: Int = 0, itemsPerPage: Int = 20, totalItems: Int = 20) {
-        self.page = page
-        self.itemsPerPage = itemsPerPage
-        self.totalItems = totalItems
-    }
 
     var hasMorePages: Bool {
         return (page * itemsPerPage) < totalItems
@@ -23,6 +17,12 @@ class Pagination {
     var nextPage: Int {
         page += 1
         return page
+    }
+
+    init(page: Int = 0, itemsPerPage: Int = 20, totalItems: Int = 20) {
+        self.page = page
+        self.itemsPerPage = itemsPerPage
+        self.totalItems = totalItems
     }
 
     func clear() {

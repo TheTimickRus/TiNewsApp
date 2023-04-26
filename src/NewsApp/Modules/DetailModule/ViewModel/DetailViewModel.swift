@@ -2,15 +2,15 @@
 //  DetailViewModel.swift
 //  NewsApp
 //
-//  Created by Kate on 05.02.2023.
+//  Created by Andrey Timofeev on 05.02.2023.
 //
 
 final class DetailViewModel {
-    // MARK: Internal Props
+    // MARK: - Internal Props
 
     let currentNews: News
 
-    // MARK: Private Props
+    // MARK: - Private Props
 
     private let router: DetailRouter
 

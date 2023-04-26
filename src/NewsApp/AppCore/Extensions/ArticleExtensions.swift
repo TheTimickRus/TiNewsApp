@@ -2,7 +2,7 @@
 //  ArticleExtensions.swift
 //  NewsApp
 //
-//  Created by Kate on 04.02.2023.
+//  Created by Andrey Timofeev on 04.02.2023.
 //
 
 import Foundation
