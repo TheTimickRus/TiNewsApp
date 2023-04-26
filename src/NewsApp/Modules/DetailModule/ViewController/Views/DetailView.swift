@@ -6,6 +6,7 @@
 //
 
 import Kingfisher
+import SwiftDate
 import SwifterSwift
 import UIKit
 
@@ -82,7 +83,7 @@ extension DetailView {
 
         articleImageView.kf.setImage(with: URL(string: props.news.imageUrl), placeholder: Assets.Images.placegolder)
         titleLabel.text = props.news.title
-        dateAndAutorLabel.text = "\(props.news.publishedAt), \(props.news.author)"
+        dateAndAutorLabel.text = "\(props.news.publishedAt.toISODate()?.toString(.dateTime(.medium)) ?? "-"), \(props.news.author)"
         descriptionLabel.text = props.news.description
     }
 }

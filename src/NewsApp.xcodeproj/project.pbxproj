@@ -16,6 +16,9 @@
 		D42EEF1729F925BC00BFCB7D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D42EEF1629F925BC00BFCB7D /* SnapKit */; };
 		D42EEF1929F926C800BFCB7D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42EEF1829F926C800BFCB7D /* Assets.swift */; };
 		D42EEF1D29F9285C00BFCB7D /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42EEF1C29F9285C00BFCB7D /* Preferences.swift */; };
+		D42EEF2029F934D300BFCB7D /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = D42EEF1F29F934D300BFCB7D /* SwiftDate */; };
+		D42EEF2429F9434100BFCB7D /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42EEF2329F9434100BFCB7D /* ViewModel.swift */; };
+		D42EEF2629F9446100BFCB7D /* CombineStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42EEF2529F9446100BFCB7D /* CombineStore.swift */; };
 		D477ADF4298EB8CA00EACD4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477ADF3298EB8CA00EACD4B /* AppDelegate.swift */; };
 		D477ADF6298EB8CA00EACD4B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477ADF5298EB8CA00EACD4B /* SceneDelegate.swift */; };
 		D477ADF8298EB8CA00EACD4B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477ADF7298EB8CA00EACD4B /* MainViewController.swift */; };
@@ -44,6 +47,8 @@
 		D42EEEFC29F9217900BFCB7D /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		D42EEF1829F926C800BFCB7D /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		D42EEF1C29F9285C00BFCB7D /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		D42EEF2329F9434100BFCB7D /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		D42EEF2529F9446100BFCB7D /* CombineStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineStore.swift; sourceTree = "<group>"; };
 		D477ADF0298EB8CA00EACD4B /* NewsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D477ADF3298EB8CA00EACD4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D477ADF5298EB8CA00EACD4B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +84,7 @@
 				D42EEF0029F922FC00BFCB7D /* Kingfisher in Frameworks */,
 				D42EEF0329F9231D00BFCB7D /* Alamofire in Frameworks */,
 				D42EEF1729F925BC00BFCB7D /* SnapKit in Frameworks */,
+				D42EEF2029F934D300BFCB7D /* SwiftDate in Frameworks */,
 				D42EEF0929F9235200BFCB7D /* Then in Frameworks */,
 				D42EEF0F29F9239300BFCB7D /* CombineCocoa in Frameworks */,
 			);
@@ -173,6 +179,8 @@
 			isa = PBXGroup;
 			children = (
 				D477AE15298EE2F600EACD4B /* Pagination.swift */,
+				D42EEF2329F9434100BFCB7D /* ViewModel.swift */,
+				D42EEF2529F9446100BFCB7D /* CombineStore.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -368,6 +376,7 @@
 				D42EEF0829F9235200BFCB7D /* Then */,
 				D42EEF0E29F9239300BFCB7D /* CombineCocoa */,
 				D42EEF1629F925BC00BFCB7D /* SnapKit */,
+				D42EEF1F29F934D300BFCB7D /* SwiftDate */,
 			);
 			productName = NewsApp;
 			productReference = D477ADF0298EB8CA00EACD4B /* NewsApp.app */;
@@ -404,6 +413,7 @@
 				D42EEF0729F9235200BFCB7D /* XCRemoteSwiftPackageReference "Then" */,
 				D42EEF0D29F9239300BFCB7D /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 				D42EEF1529F925BC00BFCB7D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				D42EEF1E29F934D300BFCB7D /* XCRemoteSwiftPackageReference "SwiftDate" */,
 			);
 			productRefGroup = D477ADF1298EB8CA00EACD4B /* Products */;
 			projectDirPath = "";
@@ -475,7 +485,9 @@
 				D42EEF1D29F9285C00BFCB7D /* Preferences.swift in Sources */,
 				D477AE2A298FB33700EACD4B /* DetailViewController.swift in Sources */,
 				D477AE21298EE8BD00EACD4B /* ArticleExtensions.swift in Sources */,
+				D42EEF2429F9434100BFCB7D /* ViewModel.swift in Sources */,
 				D477AE0A298EBBD200EACD4B /* MainTableViewCell.swift in Sources */,
+				D42EEF2629F9446100BFCB7D /* CombineStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -741,6 +753,14 @@
 				minimumVersion = 5.6.0;
 			};
 		};
+		D42EEF1E29F934D300BFCB7D /* XCRemoteSwiftPackageReference "SwiftDate" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/malcommac/SwiftDate";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -773,6 +793,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D42EEF1529F925BC00BFCB7D /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		D42EEF1F29F934D300BFCB7D /* SwiftDate */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D42EEF1E29F934D300BFCB7D /* XCRemoteSwiftPackageReference "SwiftDate" */;
+			productName = SwiftDate;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
