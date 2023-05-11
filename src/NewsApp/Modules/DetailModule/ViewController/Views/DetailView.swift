@@ -5,9 +5,14 @@
 //  Created by Andrey Timofeev on 05.02.2023.
 //
 
+import Combine
+import CombineCocoa
+import CombineExt
 import Kingfisher
+import SnapKit
 import SwiftDate
 import SwifterSwift
+import Then
 import UIKit
 
 final class DetailView: UIView {
@@ -19,7 +24,9 @@ final class DetailView: UIView {
 
     // MARK: - Internal Props
 
-    var isShowNews: ((String?) -> Void)?
+    var showNewsButtonTapPublisher: AnyPublisher<Void, Never> {
+        showNewsButton.tapPublisher
+    }
 
     // MARK: - Private Props
 
@@ -27,39 +34,28 @@ final class DetailView: UIView {
 
     // MARK: - Views
 
-    private lazy var articleImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.layer.cornerRadius = 20
-        return iv
-    }()
+    private lazy var articleImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.layerCornerRadius = Constants.articleImageViewCornerRadius
+    }
 
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .bold)
-        label.numberOfLines = 0
-        return label
-    }()
+    private lazy var titleLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 14, weight: .bold)
+        $0.numberOfLines = 0
+    }
 
-    private lazy var dateAndAutorLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 10, weight: .light)
-        return label
-    }()
+    private lazy var dateAndAutorLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 10, weight: .light)
+    }
 
-    private lazy var descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 12, weight: .regular)
-        label.numberOfLines = 0
-        return label
-    }()
+    private lazy var descriptionLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 12, weight: .regular)
+        $0.numberOfLines = 0
+    }
 
-    private lazy var showNewsButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Открыть новость", for: .normal)
-        return button
-    }()
+    private lazy var showNewsButton = UIButton(type: .system).then {
+        $0.setTitle("Открыть новость", for: .normal)
+    }
 
     // MARK: - LifeCycle
 
@@ -99,43 +95,41 @@ private extension DetailView {
             descriptionLabel,
             showNewsButton
         ])
-
-        showNewsButton.addTarget(self, action: #selector(showNews), for: .touchUpInside)
     }
 
     func setupConstraints() {
-        articleImageView.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateAndAutorLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        showNewsButton.translatesAutoresizingMaskIntoConstraints = false
+        articleImageView.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.leading.trailing.equalToSuperview().inset(Constants.mainInset)
+            $0.height.equalTo(Constants.articleImageViewHeight)
+        }
 
-        NSLayoutConstraint.activate([
-            articleImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            articleImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12),
-            articleImageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12),
-            articleImageView.heightAnchor.constraint(equalToConstant: 250),
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(articleImageView.snp.bottom).offset(Constants.mainInset)
+            $0.leading.trailing.equalToSuperview().inset(Constants.mainInset)
+        }
 
-            titleLabel.topAnchor.constraint(equalTo: articleImageView.bottomAnchor, constant: 12),
-            titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12),
-            titleLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12),
+        dateAndAutorLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.mainInset)
+            $0.leading.trailing.equalToSuperview().inset(Constants.mainInset)
+        }
 
-            dateAndAutorLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
-            dateAndAutorLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12),
-            dateAndAutorLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12),
+        descriptionLabel.snp.makeConstraints {
+            $0.top.equalTo(dateAndAutorLabel.snp.bottom).offset(Constants.mainInset)
+            $0.leading.trailing.equalToSuperview().inset(Constants.mainInset)
+        }
 
-            descriptionLabel.topAnchor.constraint(equalTo: dateAndAutorLabel.bottomAnchor, constant: 12),
-            descriptionLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12),
-            descriptionLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12),
-
-            showNewsButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 12),
-            showNewsButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 12),
-            showNewsButton.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -12)
-        ])
+        showNewsButton.snp.makeConstraints {
+            $0.top.equalTo(descriptionLabel.snp.bottom).offset(Constants.mainInset)
+            $0.leading.trailing.equalToSuperview().inset(Constants.mainInset)
+        }
     }
+}
 
-    @objc
-    func showNews() {
-        isShowNews?(self.props?.news.url)
+private extension DetailView {
+    enum Constants {
+        static let articleImageViewCornerRadius = 20.0
+        static let articleImageViewHeight = 250.0
+        static let mainInset = 12.0
     }
 }

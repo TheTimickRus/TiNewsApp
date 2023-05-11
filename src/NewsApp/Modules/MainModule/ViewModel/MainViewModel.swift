@@ -6,14 +6,14 @@
 //
 
 import Combine
+import CombineExt
 import Foundation
 
 final class MainViewModel {
     // MARK: - Private Props
 
     private let router: MainRouter
-    private let api = ApiService.shared
-    private let storage: StorageServiceProtocol = StorageService()
+    private let apiService: ApiService
 
     private var pagination = Pagination()
 
@@ -22,16 +22,17 @@ final class MainViewModel {
 
     // MARK: - LifeCycle
 
-    init(router: MainRouter) {
+    init(router: MainRouter, apiService: ApiService) {
         self.router = router
+        self.apiService = apiService
     }
 }
 
 extension MainViewModel: ViewModel {
     struct Input {
-        let viewDidLoad: AnyPublisher<Bool, Never>
-        let refresh: AnyPublisher<Bool, Never>
-        let loadMoreData: AnyPublisher<Bool, Never>
+        let viewDidLoad: AnyPublisher<Void, Never>
+        let refresh: AnyPublisher<Void, Never>
+        let loadMoreData: AnyPublisher<Void, Never>
         let didSelectRow: AnyPublisher<News, Never>
     }
 
@@ -42,17 +43,24 @@ extension MainViewModel: ViewModel {
     func transform(input: Input, output: (Output) -> Void) {
         combineStore.clear()
 
-        Publishers.Merge3(
-            input.viewDidLoad,
-            input.refresh,
-            input.loadMoreData
-        )
-        .sink(
-            receiveValue: { [weak self] isResetData in
-                self?.fetchNews(isResetData: isResetData)
+        input.viewDidLoad
+            .sink { [weak self] in
+                self?.fetchNews(isResetData: true)
             }
-        )
-        .store(in: &combineStore.cancellable)
+            .store(in: &combineStore.cancellable)
+
+        input.refresh
+            .dropFirst()
+            .sink { [weak self] in
+                self?.fetchNews(isResetData: true)
+            }
+            .store(in: &combineStore.cancellable)
+
+        input.loadMoreData
+            .sink { [weak self] in
+                self?.fetchNews()
+            }
+            .store(in: &combineStore.cancellable)
 
         input.didSelectRow
             .sink(receiveValue: { [weak self] in self?.showDetailNews(news: $0) })
@@ -86,11 +94,13 @@ extension MainViewModel {
                     return
                 }
 
-                let response = try await api.fetchNews(owner: .wsj, page: pagination.nextPage, pageSize: pagination.itemsPerPage)
+                let response = try await apiService.fetchNews(owner: .wsj, page: pagination.nextPage, pageSize: pagination.itemsPerPage)
                 pagination.totalItems = response.totalResults ?? 20
                 let items = response.articles?.map { $0.toNews() } ?? []
 
-                newsSubject.send(items)
+                var latest = newsSubject.value
+                latest.append(contentsOf: items)
+                newsSubject.send(latest)
             } catch {
                 self.router.showError(error)
             }

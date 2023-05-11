@@ -177,6 +177,7 @@ file_name:
     - ImageExtensions.swift
     - UIViewExtensions.swift
     - ArticleExtensions.swift
+    - EasyDi.swift
 
 force_cast:
   error

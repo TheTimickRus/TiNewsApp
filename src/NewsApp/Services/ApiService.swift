@@ -19,19 +19,13 @@ enum NewsOwner {
     }
 }
 
-protocol ApiServiceProtocol {
-    func fetchNews(owner: NewsOwner, page: Int, pageSize: Int) async throws -> NewsResponse
-}
-
 // MARK: - ApiService
 
-struct ApiService {
-    static let shared: ApiServiceProtocol = ApiService()
-}
+struct ApiService { }
 
 // MARK: - ApiServiceProtocol
 
-extension ApiService: ApiServiceProtocol {
+extension ApiService {
     func fetchNews(owner: NewsOwner = .wsj, page: Int = 1, pageSize: Int = 20) async throws -> NewsResponse {
         try await AF.request(
             "\(Preferences.baseUrl)/v2/everything",

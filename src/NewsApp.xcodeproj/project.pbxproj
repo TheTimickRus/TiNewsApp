@@ -40,7 +40,9 @@
 		D477AE36298FBCB700EACD4B /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477AE35298FBCB700EACD4B /* MainRouter.swift */; };
 		D477AE39298FBE8600EACD4B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477AE38298FBE8600EACD4B /* MainViewModel.swift */; };
 		D477AE44298FC9FA00EACD4B /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477AE43298FC9FA00EACD4B /* WebViewController.swift */; };
-		D477AE4E298FF50300EACD4B /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D477AE4D298FF50300EACD4B /* StorageService.swift */; };
+		D4F9BF532A0D015B005F5CB6 /* CombineExt in Frameworks */ = {isa = PBXBuildFile; productRef = D4F9BF522A0D015B005F5CB6 /* CombineExt */; };
+		D4F9BF592A0D071E005F5CB6 /* EasyDi.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F9BF582A0D071E005F5CB6 /* EasyDi.swift */; };
+		D4F9BF5D2A0D08D3005F5CB6 /* ServicesAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F9BF5C2A0D08D3005F5CB6 /* ServicesAssembly.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,7 +74,8 @@
 		D477AE35298FBCB700EACD4B /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
 		D477AE38298FBE8600EACD4B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		D477AE43298FC9FA00EACD4B /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
-		D477AE4D298FF50300EACD4B /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		D4F9BF582A0D071E005F5CB6 /* EasyDi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasyDi.swift; sourceTree = "<group>"; };
+		D4F9BF5C2A0D08D3005F5CB6 /* ServicesAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembly.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4F9BF532A0D015B005F5CB6 /* CombineExt in Frameworks */,
 				D42EEF0629F9233A00BFCB7D /* SwifterSwift in Frameworks */,
 				D42EEF0029F922FC00BFCB7D /* Kingfisher in Frameworks */,
 				D42EEF0329F9231D00BFCB7D /* Alamofire in Frameworks */,
@@ -101,14 +105,14 @@
 			name = Configs;
 			sourceTree = "<group>";
 		};
-		D42EEF1A29F9283300BFCB7D /* AppCore */ = {
+		D42EEF1A29F9283300BFCB7D /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				D42EEF1B29F9285000BFCB7D /* Preferences */,
 				D477AE10298EE1DA00EACD4B /* Extensions */,
-				D477AE14298EE23100EACD4B /* Helpers */,
+				D477AE14298EE23100EACD4B /* Common */,
 			);
-			path = AppCore;
+			path = Core;
 			sourceTree = "<group>";
 		};
 		D42EEF1B29F9285000BFCB7D /* Preferences */ = {
@@ -140,7 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				D477AE0F298EDF4500EACD4B /* Application */,
-				D42EEF1A29F9283300BFCB7D /* AppCore */,
+				D42EEF1A29F9283300BFCB7D /* Core */,
 				D477AE1A298EE6CB00EACD4B /* Modules */,
 				D477AE18298EE6A900EACD4B /* Models */,
 				D477AE13298EE22400EACD4B /* Services */,
@@ -161,7 +165,7 @@
 		D477AE10298EE1DA00EACD4B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				D477AE20298EE8BD00EACD4B /* ArticleExtensions.swift */,
+				D4F9BF542A0D0522005F5CB6 /* Custom */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -169,20 +173,21 @@
 		D477AE13298EE22400EACD4B /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D4F9BF5C2A0D08D3005F5CB6 /* ServicesAssembly.swift */,
 				D477AE0B298EC6C400EACD4B /* ApiService.swift */,
-				D477AE4D298FF50300EACD4B /* StorageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
 		};
-		D477AE14298EE23100EACD4B /* Helpers */ = {
+		D477AE14298EE23100EACD4B /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D4F9BF582A0D071E005F5CB6 /* EasyDi.swift */,
 				D477AE15298EE2F600EACD4B /* Pagination.swift */,
 				D42EEF2329F9434100BFCB7D /* ViewModel.swift */,
 				D42EEF2529F9446100BFCB7D /* CombineStore.swift */,
 			);
-			path = Helpers;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		D477AE18298EE6A900EACD4B /* Models */ = {
@@ -352,6 +357,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		D4F9BF542A0D0522005F5CB6 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				D477AE20298EE8BD00EACD4B /* ArticleExtensions.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -377,6 +390,7 @@
 				D42EEF0E29F9239300BFCB7D /* CombineCocoa */,
 				D42EEF1629F925BC00BFCB7D /* SnapKit */,
 				D42EEF1F29F934D300BFCB7D /* SwiftDate */,
+				D4F9BF522A0D015B005F5CB6 /* CombineExt */,
 			);
 			productName = NewsApp;
 			productReference = D477ADF0298EB8CA00EACD4B /* NewsApp.app */;
@@ -414,6 +428,7 @@
 				D42EEF0D29F9239300BFCB7D /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 				D42EEF1529F925BC00BFCB7D /* XCRemoteSwiftPackageReference "SnapKit" */,
 				D42EEF1E29F934D300BFCB7D /* XCRemoteSwiftPackageReference "SwiftDate" */,
+				D4F9BF512A0D015B005F5CB6 /* XCRemoteSwiftPackageReference "CombineExt" */,
 			);
 			productRefGroup = D477ADF1298EB8CA00EACD4B /* Products */;
 			projectDirPath = "";
@@ -465,6 +480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D477AE0E298ECA7A00EACD4B /* NewsResponse.swift in Sources */,
+				D4F9BF5D2A0D08D3005F5CB6 /* ServicesAssembly.swift in Sources */,
 				D477AE1F298EE75900EACD4B /* News.swift in Sources */,
 				D477AE44298FC9FA00EACD4B /* WebViewController.swift in Sources */,
 				D477ADF8298EB8CA00EACD4B /* MainViewController.swift in Sources */,
@@ -474,8 +490,8 @@
 				D477AE36298FBCB700EACD4B /* MainRouter.swift in Sources */,
 				D42EEF1929F926C800BFCB7D /* Assets.swift in Sources */,
 				D477ADF4298EB8CA00EACD4B /* AppDelegate.swift in Sources */,
+				D4F9BF592A0D071E005F5CB6 /* EasyDi.swift in Sources */,
 				D477AE16298EE2F600EACD4B /* Pagination.swift in Sources */,
-				D477AE4E298FF50300EACD4B /* StorageService.swift in Sources */,
 				D477AE34298FB77700EACD4B /* MainAssembly.swift in Sources */,
 				D477AE2C298FB35E00EACD4B /* DetailView.swift in Sources */,
 				D477ADF6298EB8CA00EACD4B /* SceneDelegate.swift in Sources */,
@@ -555,7 +571,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -609,7 +625,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -625,7 +641,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = A89S4GV77H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewsApp/Resources/Info.plist;
@@ -638,7 +654,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.thetimickrus.NewsApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -656,7 +672,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = A89S4GV77H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = NewsApp/Resources/Info.plist;
@@ -669,7 +685,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.thetimickrus.NewsApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -761,6 +777,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		D4F9BF512A0D015B005F5CB6 /* XCRemoteSwiftPackageReference "CombineExt" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CombineCommunity/CombineExt.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.8.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -798,6 +822,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D42EEF1E29F934D300BFCB7D /* XCRemoteSwiftPackageReference "SwiftDate" */;
 			productName = SwiftDate;
+		};
+		D4F9BF522A0D015B005F5CB6 /* CombineExt */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4F9BF512A0D015B005F5CB6 /* XCRemoteSwiftPackageReference "CombineExt" */;
+			productName = CombineExt;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

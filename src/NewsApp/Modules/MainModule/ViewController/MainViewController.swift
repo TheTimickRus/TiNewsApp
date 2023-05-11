@@ -36,29 +36,29 @@ final class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        configure()
+
         viewDidLoadSubject.send()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        configure()
+        title = "NewsApp"
     }
 
     // MARK: - Private Methods
 
     func configure() {
-        title = "NewsApp"
-
         viewModel.transform(
             input: .init(
-                viewDidLoad: viewDidLoadSubject.map { true }.eraseToAnyPublisher(),
+                viewDidLoad: viewDidLoadSubject.eraseToAnyPublisher(),
                 refresh: mainView.refreshPublisher,
                 loadMoreData: mainView.loadMoreDataPublisher,
                 didSelectRow: mainView.didSelectRowPublisher
             )
         ) { [weak self] output in
             guard let self else { return }
-
             self.combineStore.clear()
 
             output.news
@@ -70,18 +70,5 @@ final class MainViewController: UIViewController {
                 }
                 .store(in: &self.combineStore.cancellable)
         }
-
-//        mainView.isRefreshCallBack = {
-//            self.viewModel.fetchNews(isResetData: true)
-//        }
-//
-//        mainView.isLoadMoreData = {
-//            self.viewModel.fetchNews()
-//        }
-//
-//        mainView.isShowDetail = {
-//            self.viewModel.updateNews(id: $0.id)
-//            self.viewModel.showDetailNews(news: $0)
-//        }
     }
 }

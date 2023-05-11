@@ -10,7 +10,7 @@ import UIKit
 enum MainAssembly {
     static func create() -> UIViewController {
         let router = MainRouter()
-        let viewModel = MainViewModel(router: router)
+        let viewModel = MainViewModel(router: router, apiService: ServicesAssembly.instance().apiService)
         let viewController = MainViewController(viewModel: viewModel)
         router.viewController = viewController
 

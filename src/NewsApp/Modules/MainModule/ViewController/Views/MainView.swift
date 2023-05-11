@@ -7,6 +7,7 @@
 
 import Combine
 import CombineCocoa
+import CombineExt
 import SnapKit
 import SwifterSwift
 import UIKit
@@ -20,18 +21,19 @@ final class MainView: UIView {
 
     // MARK: - Public Props
 
-    var refreshPublisher: AnyPublisher<Bool, Never> {
+    var refreshPublisher: AnyPublisher<Void, Never> {
         refreshControl.isRefreshingPublisher
-            .map { _ in true }
+            .mapToVoid()
             .eraseToAnyPublisher()
     }
 
-    var loadMoreDataPublisher: AnyPublisher<Bool, Never> {
+    var loadMoreDataPublisher: AnyPublisher<Void, Never> {
         tableView.willDisplayCellPublisher
             .filter { [weak self] in
-                $0.indexPath.row == (self?.items.count ?? 0) - 2
+                guard let self else { return false }
+                return $0.indexPath.row == self.items.count - 1
             }
-            .map { _ in false }
+            .mapToVoid()
             .eraseToAnyPublisher()
     }
 
@@ -106,7 +108,7 @@ private extension MainView {
 
 extension MainView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.items.count
+        items.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

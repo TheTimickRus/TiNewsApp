@@ -11,8 +11,8 @@ final class DetailViewController: UIViewController {
     // MARK: - Private Props
 
     private let viewModel: DetailViewModel
-
     private let detailView = DetailView()
+    private var store = CombineStore()
 
     // MARK: - LifeCycle
 
@@ -33,19 +33,25 @@ final class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configure()
+        bind()
     }
 }
 
 private extension DetailViewController {
-    func configure() {
-        detailView.isShowNews = {
-            guard let url = $0 else { return }
-            self.viewModel.showNews(url: url)
-        }
+    func bind() {
+        viewModel.transform(
+            input: .init(
+                showNews: detailView.showNewsButtonTapPublisher
+            ),
+            output: { [weak self] output in
+                guard let self else { return }
 
-        let currentNews = viewModel.currentNews
-        detailView.render(.init(news: currentNews))
+                output.news
+                    .sink { [weak self] in
+                        self?.detailView.render(.init(news: $0))
+                    }
+                    .store(in: &self.store.cancellable)
+            }
+        )
     }
 }
