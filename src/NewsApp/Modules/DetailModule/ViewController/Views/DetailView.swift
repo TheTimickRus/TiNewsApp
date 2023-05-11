@@ -55,6 +55,9 @@ final class DetailView: UIView {
 
     private lazy var showNewsButton = UIButton(type: .system).then {
         $0.setTitle("Открыть новость", for: .normal)
+        $0.setTitleColor(.systemBackground, for: .normal)
+        $0.backgroundColor = .label
+        $0.layerCornerRadius = 16.0
     }
 
     // MARK: - LifeCycle
@@ -80,7 +83,7 @@ extension DetailView {
         articleImageView.kf.setImage(with: URL(string: props.news.imageUrl), placeholder: Assets.Images.placegolder)
         titleLabel.text = props.news.title
         dateAndAutorLabel.text = "\(props.news.publishedAt.toISODate()?.toString(.dateTime(.medium)) ?? "-"), \(props.news.author)"
-        descriptionLabel.text = props.news.description
+        descriptionLabel.text = "\(props.news.description)\n\n\(props.news.content)"
     }
 }
 
@@ -122,6 +125,7 @@ private extension DetailView {
         showNewsButton.snp.makeConstraints {
             $0.top.equalTo(descriptionLabel.snp.bottom).offset(Constants.mainInset)
             $0.leading.trailing.equalToSuperview().inset(Constants.mainInset)
+            $0.height.equalTo(Constants.showNewsButtonHeight)
         }
     }
 }
@@ -130,6 +134,7 @@ private extension DetailView {
     enum Constants {
         static let articleImageViewCornerRadius = 20.0
         static let articleImageViewHeight = 250.0
+        static let showNewsButtonHeight = 32
         static let mainInset = 12.0
     }
 }

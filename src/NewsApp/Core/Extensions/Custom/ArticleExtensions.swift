@@ -16,6 +16,7 @@ extension Article {
             publishedAt: self.publishedAt ?? "n\n",
             description: self.description ?? "n\n",
             url: self.url ?? "",
+            content: self.content ?? "",
 
             id: UUID(),
             counter: 0
