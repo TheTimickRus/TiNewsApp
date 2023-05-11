@@ -2,10 +2,12 @@
 //  NewsResponse.swift
 //  NewsApp
 //
-//  Created by Kate on 03.02.2023.
+//  Created by Andrey Timofeev on 03.02.2023.
 //
 
 import Foundation
+
+// swiftlint:disable type_contents_order
 
 public struct NewsResponse: Codable {
     public let status: String?
@@ -13,9 +15,9 @@ public struct NewsResponse: Codable {
     public let articles: [Article]?
 
     enum CodingKeys: String, CodingKey {
-        case status = "status"
-        case totalResults = "totalResults"
-        case articles = "articles"
+        case status
+        case totalResults
+        case articles
     }
 
     public init(status: String?, totalResults: Int?, articles: [Article]?) {
@@ -38,14 +40,14 @@ public struct Article: Codable {
     public let content: String?
 
     enum CodingKeys: String, CodingKey {
-        case source = "source"
-        case author = "author"
-        case title = "title"
-        case description = "description"
-        case url = "url"
-        case urlToImage = "urlToImage"
-        case publishedAt = "publishedAt"
-        case content = "content"
+        case source
+        case author
+        case title
+        case description
+        case url
+        case urlToImage
+        case publishedAt
+        case content
     }
 
     public init(
@@ -76,8 +78,8 @@ public struct Source: Codable {
     public let name: String?
 
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case name = "name"
+        case id
+        case name
     }
 
     public init(id: String?, name: String?) {

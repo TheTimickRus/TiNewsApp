@@ -2,13 +2,17 @@
 //  MainTableViewCell.swift
 //  NewsApp
 //
-//  Created by Kate on 04.02.2023.
+//  Created by Andrey Timofeev on 04.02.2023.
 //
 
+import Kingfisher
+import SnapKit
+import SwifterSwift
+import Then
 import UIKit
 
 final class MainTableViewCell: UITableViewCell {
-    // MARK: Props
+    // MARK: - Props
 
     struct Props: Equatable {
         let imageUrl: String
@@ -22,36 +26,26 @@ final class MainTableViewCell: UITableViewCell {
 
     // MARK: - Views
 
-    private lazy var mainView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 20
+    private lazy var mainView = UIView().then {
+        $0.backgroundColor = .secondarySystemBackground
+        $0.layerCornerRadius = Constants.mainCornerRadius
+        $0.addShadow(ofColor: .black, radius: 12, opacity: 0.25)
+    }
 
-        view.addShadow(ofColor: .black, radius: 12, opacity: 0.25)
-        return view
-    }()
+    private lazy var articleImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.layerCornerRadius = Constants.mainCornerRadius
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+    }
 
-    private lazy var articleImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.clipsToBounds = true
-        iv.layer.cornerRadius = 20
-        iv.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        return iv
-    }()
+    private lazy var titleLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 14, weight: .bold)
+        $0.numberOfLines = 0
+    }
 
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 14, weight: .bold)
-        label.numberOfLines = 0
-        return label
-    }()
-
-    private lazy var counterLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 10, weight: .light)
-        return label
-    }()
+    private lazy var counterLabel = UILabel().then {
+        $0.font = .systemFont(ofSize: 10, weight: .light)
+    }
 
     private lazy var labelsStackView = UIStackView(
         arrangedSubviews: [
@@ -59,7 +53,7 @@ final class MainTableViewCell: UITableViewCell {
             counterLabel
         ],
         axis: .vertical,
-        spacing: 8,
+        spacing: Constants.vStackLabelsSpacing,
         alignment: .leading
     )
 
@@ -72,6 +66,7 @@ final class MainTableViewCell: UITableViewCell {
         setupConstaints()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -82,7 +77,7 @@ extension MainTableViewCell {
         guard self.props != props else { return }
         self.props = props
 
-        articleImageView.loadImage(from: URL(string: props.imageUrl))
+        articleImageView.kf.setImage(with: URL(string: props.imageUrl), placeholder: Assets.Images.placegolder)
 
         titleLabel.text = props.title
 
@@ -105,31 +100,27 @@ private extension MainTableViewCell {
     }
 
     func setupConstaints() {
-        mainView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            mainView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 12),
-            mainView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
-            mainView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            mainView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
-        ])
+        mainView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(Constants.mainInset)
+        }
 
+        articleImageView.snp.makeConstraints {
+            $0.left.top.right.equalToSuperview()
+            $0.height.equalTo(Constants.articleImageHeight)
+        }
 
-        articleImageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            articleImageView.leftAnchor.constraint(equalTo: mainView.leftAnchor),
-            articleImageView.topAnchor.constraint(equalTo: mainView.topAnchor),
-            articleImageView.rightAnchor.constraint(equalTo: mainView.rightAnchor),
-            articleImageView.heightAnchor.constraint(equalToConstant: 225)
-        ])
+        labelsStackView.snp.makeConstraints {
+            $0.top.equalTo(articleImageView.snp.bottom).offset(Constants.mainInset.top)
+            $0.left.right.bottom.equalToSuperview().inset(Constants.mainInset)
+        }
+    }
+}
 
-
-        labelsStackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            labelsStackView.leftAnchor.constraint(equalTo: mainView.leftAnchor, constant: 12),
-            labelsStackView.rightAnchor.constraint(equalTo: mainView.rightAnchor, constant: -12),
-            labelsStackView.topAnchor.constraint(equalTo: articleImageView.bottomAnchor, constant: 12),
-            labelsStackView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: -12)
-        ])
-
+private extension MainTableViewCell {
+    enum Constants {
+        static let mainCornerRadius = 20.0
+        static let vStackLabelsSpacing = 8.0
+        static let articleImageHeight = 225.0
+        static let mainInset = UIEdgeInsets(top: 12.0, left: 12.0, bottom: 12.0, right: 12.0)
     }
 }

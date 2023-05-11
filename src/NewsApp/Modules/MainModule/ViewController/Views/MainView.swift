@@ -2,13 +2,18 @@
 //  MainView.swift
 //  NewsApp
 //
-//  Created by Kate on 04.02.2023.
+//  Created by Andrey Timofeev on 04.02.2023.
 //
 
+import Combine
+import CombineCocoa
+import CombineExt
+import SnapKit
+import SwifterSwift
 import UIKit
 
 final class MainView: UIView {
-    // MARK: Props
+    // MARK: - Props
 
     struct MainViewProps: Equatable {
         let items: [News]
@@ -16,9 +21,29 @@ final class MainView: UIView {
 
     // MARK: - Public Props
 
-    var isRefreshCallBack: (() -> Void)?
-    var isLoadMoreData: (() -> Void)?
-    var isShowDetail: ((News) -> Void)?
+    var refreshPublisher: AnyPublisher<Void, Never> {
+        refreshControl.isRefreshingPublisher
+            .mapToVoid()
+            .eraseToAnyPublisher()
+    }
+
+    var loadMoreDataPublisher: AnyPublisher<Void, Never> {
+        tableView.willDisplayCellPublisher
+            .filter { [weak self] in
+                guard let self else { return false }
+                return $0.indexPath.row == self.items.count - 1
+            }
+            .mapToVoid()
+            .eraseToAnyPublisher()
+    }
+
+    var didSelectRowPublisher: AnyPublisher<News, Never> {
+        tableView.didSelectRowPublisher
+            .compactMap { [weak self] in
+                self?.items[$0.row]
+            }
+            .eraseToAnyPublisher()
+    }
 
     // MARK: - Private Props
 
@@ -28,7 +53,6 @@ final class MainView: UIView {
     // MARK: - Views
 
     private lazy var tableView = UITableView()
-
     private lazy var refreshControl = UIRefreshControl()
 
     // MARK: - LifeCycle
@@ -40,6 +64,7 @@ final class MainView: UIView {
         setupConstaints()
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -47,6 +72,10 @@ final class MainView: UIView {
 
 extension MainView {
     func render(_ props: MainViewProps) {
+        defer {
+            refreshControl.endRefreshing()
+        }
+
         guard self.mainViewProps != props else { return }
         self.mainViewProps = props
         self.items = props.items
@@ -59,61 +88,34 @@ private extension MainView {
     func configure() {
         backgroundColor = .white
 
-        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
-
         tableView.refreshControl = refreshControl
 
         tableView.separatorStyle = .none
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(MainTableViewCell.self, forCellReuseIdentifier: "MainCell")
+        tableView.register(cellWithClass: MainTableViewCell.self)
 
         addSubview(tableView)
     }
 
     func setupConstaints() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: self.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-        ])
-    }
-
-    @objc
-    private func handleRefresh() {
-        isRefreshCallBack?()
-        refreshControl.endRefreshing()
+        tableView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
 }
 
 extension MainView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.items.count
+        items.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MainCell", for: indexPath) as? MainTableViewCell
-        else {
-            return UITableViewCell()
-        }
+        let cell = tableView.dequeueReusableCell(withClass: MainTableViewCell.self)
 
         let item = self.items[indexPath.row]
         cell.render(.init(imageUrl: item.imageUrl, title: item.title, counter: item.counter))
         return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = items[indexPath.row]
-        self.isShowDetail?(item)
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == items.count - 2 {
-            isLoadMoreData?()
-        }
     }
 }
