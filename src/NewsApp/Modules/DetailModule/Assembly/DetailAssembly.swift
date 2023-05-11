@@ -2,7 +2,7 @@
 //  DetailAssembly.swift
 //  NewsApp
 //
-//  Created by Kate on 05.02.2023.
+//  Created by Andrey Timofeev on 05.02.2023.
 //
 
 import UIKit

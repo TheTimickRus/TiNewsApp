@@ -2,17 +2,17 @@
 //  DetailViewController.swift
 //  NewsApp
 //
-//  Created by Kate on 05.02.2023.
+//  Created by Andrey Timofeev on 05.02.2023.
 //
 
 import UIKit
 
 final class DetailViewController: UIViewController {
-    // MARK: Private Props
+    // MARK: - Private Props
 
     private let viewModel: DetailViewModel
-    
     private let detailView = DetailView()
+    private var store = CombineStore()
 
     // MARK: - LifeCycle
 
@@ -22,6 +22,7 @@ final class DetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -32,19 +33,25 @@ final class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        configure()
+        bind()
     }
 }
 
 private extension DetailViewController {
-    func configure() {
-        detailView.isShowNews = {
-            guard let url = $0 else { return }
-            self.viewModel.showNews(url: url)
-        }
+    func bind() {
+        viewModel.transform(
+            input: .init(
+                showNews: detailView.showNewsButtonTapPublisher
+            ),
+            output: { [weak self] output in
+                guard let self else { return }
 
-        let currentNews = viewModel.currentNews
-        detailView.render(.init(news: currentNews))
+                output.news
+                    .sink { [weak self] in
+                        self?.detailView.render(.init(news: $0))
+                    }
+                    .store(in: &self.store.cancellable)
+            }
+        )
     }
 }

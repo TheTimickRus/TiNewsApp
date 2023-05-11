@@ -2,7 +2,7 @@
 //  WebViewController.swift
 //  NewsApp
 //
-//  Created by Kate on 05.02.2023.
+//  Created by Andrey Timofeev on 05.02.2023.
 //
 
 import UIKit
@@ -15,7 +15,7 @@ final class WebViewController: UIViewController {
 
     // MARK: - Views
 
-    private lazy var webView: WKWebView = WKWebView()
+    private lazy var webView = WKWebView()
 
     // MARK: - LifeCycle
 
@@ -25,7 +25,6 @@ final class WebViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
 
         configure()
     }

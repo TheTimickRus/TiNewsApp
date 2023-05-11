@@ -1,7 +1,20 @@
-# Tinkoff-NewsApp
-Tinkoff-NewsApp
+# TiNewsApp
+Приложение для отображения новостей. Сторонние библиотеки не используются.
 
-# ScreenShots
-<img src="screenshots/1.png" width="250" height="550" /> <img src="screenshots/2.png" width="250" height="550" /> <img src="screenshots/3.png" width="250" height="550" />
+# Возможности
+ - Отображение новостей с API сервиса
+ - Возможность посмотреть деталку новости
+ - Возможность открыть WebView для конкретной новости и посмотреть ее в источнике
+ - Пагинация
+ - Кеширование картинок (NSCache)
+ - Архитектура - MVVM
+ - Верстка без использования StoryBoard
+ 
+# Скриншоты
+<p>
+<img src="screenshots/1.png" height="550" /> 
+<img src="screenshots/2.png" height="550" /> 
+<img src="screenshots/3.png" height="550" />
+<p>
 
  
